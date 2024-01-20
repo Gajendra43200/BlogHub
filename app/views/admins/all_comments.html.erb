@@ -1,0 +1,31 @@
+<!-- app/views/comments/index.html.erb -->
+<h1>Comments For Approval</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Commentable Type</th>
+      <th>Comment Content</th>
+      <th>User Id</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+  <% @comments.each do |comment| %>
+      <tr>
+      <% if comment.commentable_type == "Author" %>
+        <td><%= link_to comment.commentable_type, author_path(comment.commentable_id) %></td>
+        <% else %>
+        <td><%= link_to comment.commentable_type, blog_path(comment.commentable_id) %></td>
+        <% end %>
+        <td><%= comment.content %></td>
+        <td><%= comment.user_id %></td>
+        <td><%= link_to 'approved', approve_path(comment) %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<%= button_to 'Logout user', logout_path, method: :delete %>
+<%= link_to 'Back', admin_path(current_user.id) %>
+<br>

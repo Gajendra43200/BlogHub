@@ -1,0 +1,14 @@
+<p>Name: <%= @user.name %></p>
+<p>Email: <%= @user.email %></p>
+<p>Email: <%= @user.phone %></p>
+<p>Email: <%= @user.status %></p>
+<p>Type: <%= @user.type %></p>
+<p>Email: <%= @user.password_digest%></p>
+<%= link_to 'Edit', edit_user_path(@user) %> |
+<%= link_to 'Back', users_path %>
+<%= link_to 'Create Comment For  author', user_authors_path(@user) %>
+<%= link_to 'Create Comment For  Blog', user_blogs_path(@user) %>
+<%= link_to 'All Comments', comments_path %>
+
+<%= button_to 'Logout user', logout_path, method: :delete %>
+

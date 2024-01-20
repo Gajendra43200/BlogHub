@@ -1,0 +1,12 @@
+<p>Name: <%= @super_admin.name %></p>
+<p>Email: <%= @super_admin.email %></p>
+<p>Phone: <%= @super_admin.phone %></p>
+<p>Status: <%= @super_admin.status %></p>
+<p>Type: <%= @super_admin.type %></p>
+<p>Password: <%= @super_admin.password_digest%></p>
+<%= link_to 'Edit', edit_super_admin_path(@super_admin) %> |
+<%= link_to 'Pending comments for approval', approval_comments_path %>
+<%= link_to 'Create Comment For  author', user_authors_path(@super_admin) %>
+<%= link_to 'Create Comment For  Blog', user_blogs_path(@super_admin) %>
+<%= button_to 'Logout user', logout_path, method: :delete %>
+
