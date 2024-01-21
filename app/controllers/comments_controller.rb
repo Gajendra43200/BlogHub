@@ -8,16 +8,13 @@ class CommentsController < ApplicationController
   end
 
   def create
-    @comment = @commentable.comments.new(comment_params)
-    @comment.user = current_user
-    if @comment.save
-      if @comment.commentable_type == "Blog"
-         redirect_to blogs_path
-      else
-        redirect_to authors_path
-      end
+    UpdateCommentJob.set(wait: 1.minute).perform_later(comment_params, current_user, @commentable)
+    if current_user.type == "Admin"
+     redirect_to admin_path(current_user.id),  alert: "Comment update in the database after one minute"
+    elsif current_user.type == "SuperAdmin"
+     redirect_to super_admin_path(current_user.id),  alert: "Comment update in the database after one minute"
     else
-      redirect_back(fallback_location: root_path, alert: 'Error creating comment.')
+     redirect_to user_path(current_user.id),  alert: "Comment update in the database after one minute"
     end
   end
 

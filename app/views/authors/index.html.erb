@@ -1,5 +1,4 @@
 <h1>Authors</h1>
-
 <table>
   <thead>
     <tr>
@@ -12,15 +11,26 @@
     <% @authors.each do |author| %>
       <tr>
         <td><%= author.name %></td>
-        <td><%= link_to 'Show', author %></td>
+        <td><%= link_to 'Show', author_path(author) %></td>
+        <%if current_user.nil?%>
         <td><%= link_to 'Edit', edit_author_path(author) %></td>
         <td><%= button_to 'Destroy', author, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <%end%>
       </tr>
     <% end %>
   </tbody>
 </table>
-
 <br>
-
+<%if current_user.nil?%>
 <%= link_to 'New Author', new_author_path %>
 <%= link_to 'Back to users path ', users_path %>
+<%else%>
+<% if current_user.type == "Admin" %>
+<%= link_to 'Back', admin_path(current_user.id) %>
+<% elsif current_user.type == "User" %>
+<%= link_to 'Back', user_path(current_user.id) %>
+<% else %>
+<%= link_to 'Back', super_admin_path(current_user.id) %>
+<% end %>
+<% end %>
+      

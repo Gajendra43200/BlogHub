@@ -1,4 +1,8 @@
-
+<% if flash[:alert].present? %>
+<div class="alert alert-danger">
+  <%= flash[:alert] %>
+</div>
+<% end %>
 
 <table>
   <thead>
@@ -22,5 +26,15 @@
 
 <br>
 
+<%if current_user.nil?%>
 <%= link_to 'Back to blog', blogs_path %>
-<%= link_to 'Back to users path ', users_path %>
+<%else%>
+<% if current_user.type == "Admin" %>
+<%= link_to 'Back', admin_path(current_user.id) %>
+<% elsif current_user.type == "User" %>
+<%= link_to 'Back', user_path(current_user.id) %>
+<% else %>
+<%= link_to 'Back', super_admin_path(current_user.id) %>
+<% end %>
+<% end %>
+

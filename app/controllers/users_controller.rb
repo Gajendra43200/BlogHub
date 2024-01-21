@@ -1,4 +1,5 @@
 class UsersController < ApplicationController
+include Twilio
   before_action :set_user, only: [:show, :edit, :update, :destroy]
 
   def new
@@ -8,8 +9,16 @@ class UsersController < ApplicationController
   def create
     @user = User.new(user_params)
     if @user.save
+      send_email_to_user(@user)
+      send_sms_to_user(@user)
       session[:user_id] = @user.id
+      if @user.type == "User"
       redirect_to user_path(@user), notice: 'Successfully signed up!'
+      elsif @user.type == "Admin"
+        redirect_to admin_path(@user), notice: 'Successfully signed up!'
+      else
+        redirect_to super_admin_path(@user), notice: 'Successfully signed up!'
+      end
     else
       render :new
     end
@@ -36,7 +45,6 @@ class UsersController < ApplicationController
   end
 
   def login
-    # Render the login form
   end
 
   def authenticate
@@ -55,7 +63,7 @@ class UsersController < ApplicationController
     session[:user_id] = nil
     redirect_to login_path, notice: 'Logged out successfully'
   end
-
+  
   private
 
   def set_user
@@ -64,5 +72,12 @@ class UsersController < ApplicationController
 
   def user_params
     params.require(:user).permit(:email, :password_digest, :type, :name, :phone)
+  end
+
+  def send_email_to_user(user)
+    WelcomeMailer.with(user:).welcome_email.deliver_now
+  end
+  def send_sms_to_user(user)
+    Twilio::SmsService.new(user.phone).call
   end
 end

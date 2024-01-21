@@ -71,5 +71,10 @@ group :test do
 
 end
 gem "byebug"
+gem 'sidekiq'
+gem 'sidekiq-cron'
+gem 'twilio-ruby'
+gem 'dotenv-rails'
+
 
 

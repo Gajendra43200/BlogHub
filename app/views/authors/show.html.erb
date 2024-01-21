@@ -5,13 +5,12 @@
   <%= @author.name %>
 </p>
 
-
+<%if current_user.present?%>
+<%= link_to 'Create Comment', new_user_author_comment_path(@user, @author) %>
+<%else%>
 <%= link_to 'Edit', edit_author_path(@author) %> |
 <%= link_to 'Back', authors_path %>|
-<%= link_to 'create blog', new_author_blog_path(@author) %>
-<%= link_to 'Create Comment', new_user_author_comment_path(@user, @author) %>
-
-
-
+<%= link_to 'create blog', new_author_blog_path( @author) %>
+<%end%>
 
 

@@ -1,24 +1,9 @@
 class SuperAdminsController < ApplicationController
-  before_action :authenticate_request, only: [:create]
-  before_action :check_super_admin, except: [:new, :create]
+  before_action :check_super_admin
   before_action :set_super_admin, only: [:show, :edit, :update]
-
-  def new
-    @user = User.new
-  end
 
   def show
     @super_admin = User.find(params[:id])
-  end
-
-  def create
-    @user = User.new(admin_params)
-    if @user.save
-      session[:user_id] = @user.id
-      redirect_to admin_path, alert: 'Successfully signed up!'
-    else
-      render :new
-    end
   end
 
   def edit

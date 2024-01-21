@@ -10,9 +10,7 @@
     <tr>
       <th>Commentable Type</th>
       <th>Comment Content</th>
-      <th>User Id</th>
       <th>Status</th>
-
       <th colspan="3"></th>
     </tr>
   </thead>
@@ -26,16 +24,15 @@
         <td><%= link_to comment.commentable_type, blog_path(comment.commentable_id) %></td>
         <% end %>
         <td><%= comment.content %></td>
-        <td><%= comment.user_id %></td>
         <td><%= comment.status %></td>
-
         <td><%= link_to 'approved', approve_comment_by_super_admin_path(comment) %></td>
       </tr>
     <% end %>
-
   </tbody>
 </table>
 <%= button_to 'Logout user', logout_path, method: :delete %>
+<%= link_to 'All Comments', comments_path %>
+
 <br>
 <% end %>
 

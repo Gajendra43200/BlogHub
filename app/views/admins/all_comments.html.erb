@@ -28,4 +28,6 @@
 </table>
 <%= button_to 'Logout user', logout_path, method: :delete %>
 <%= link_to 'Back', admin_path(current_user.id) %>
+<%= link_to 'All Comments', comments_path %>
+
 <br>

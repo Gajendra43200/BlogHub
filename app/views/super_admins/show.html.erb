@@ -1,3 +1,8 @@
+<% if flash[:alert].present? %>
+    <div class="alert alert-danger">
+        <%= flash[:alert] %>
+    </div>
+<% end %>
 <p>Name: <%= @super_admin.name %></p>
 <p>Email: <%= @super_admin.email %></p>
 <p>Phone: <%= @super_admin.phone %></p>

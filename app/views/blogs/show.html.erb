@@ -9,6 +9,9 @@
   <strong>Content:</strong>
   <%= @blog.content %>
 </p>
-
+<%if current_user.present?%>
 <%= link_to 'Create Comment', new_user_blog_comment_path(@user, @blog) %>
+<%end%>
+
+
 
