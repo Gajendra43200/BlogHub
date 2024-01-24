@@ -1,5 +1,4 @@
 class CommentsController < ApplicationController
-  # before_action :authenticate_request, only: %i[create]
   before_action :check_user, only: [:new, :create]
   before_action :set_commentable, except: :index
 
@@ -19,8 +18,8 @@ class CommentsController < ApplicationController
   end
 
   def index
-    @comments_blog = Comment.where(commentable_type: "Blog")
-    @comments_author = Comment.where(commentable_type: "Author")
+    @comments_blog = Comment.where(commentable_type: "Blog", status: "super_admin_approved")
+    @comments_author = Comment.where(commentable_type: "Author", status: "super_admin_approved")
   end
 
   private
@@ -31,7 +30,13 @@ class CommentsController < ApplicationController
 
   def check_user
     unless current_user_is_valid?
-      render json: { message: "Only unblocked users can create comments." }
+      if current_user.type == "Admin"
+        redirect_to admin_path(current_user.id),  alert: "Only unblock users can create comments."
+       elsif current_user.type == "SuperAdmin"
+        redirect_to super_admin_path(current_user.id),  alert: "Only unblock users can create comments."
+       else
+        redirect_to user_path(current_user.id),  alert: "Only unblock users can create comments."
+       end
     end
     set_commentable
   end

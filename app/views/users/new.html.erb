@@ -1,2 +1,21 @@
-<%= render 'form',user:@user%>
-<%= link_to 'Back', users_path %>
+<style>
+a {
+    display: inline-block
+    text-decoration: none;
+    color: #007bff;
+    padding: 8px 12px;
+    margin-right: 10px;
+    margin-top: 700px;
+    cursor: pointer;
+    border: 1px solid #007bff;
+    text-decoration: none;
+    border-radius: 4px;
+}
+a:hover {
+    background-color: #007bff;
+    color: #fff;
+    border-color: #0056b3;
+}
+</style>
+<%= render 'form',user:@user%><br>
+<%= link_to 'All Users', users_path %>

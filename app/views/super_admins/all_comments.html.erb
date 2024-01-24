@@ -1,7 +1,70 @@
-<!-- app/views/comments/index.html.erb -->
+<style>
+.alert-danger {
+    background-color: #f8d7da;
+    color: #721c24;
+    padding: 10px;
+    border: 1px solid #f5c6cb;
+    margin-bottom: 20px;
+}
+
+button:hover, input[type="submit"]:hover, input[type="button"]:hover {
+    background-color: #0056b3;
+    color: white;
+
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+th, td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: left;
+}
+
+th {
+    background-color: #f2f2f2;
+}
+
+.a{
+    display: inline;
+    padding: 5px 15px;
+    text-align: center;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+    border: 1px solid #007bff;
+    color: #007bff;
+    background-color: #fff;
+    
+}
+
+a:hover {
+    # color: #0056b3;
+    background-color: #0056b3;
+    color: white;
+}
+
+#button1{
+  margin-top: -27px;
+}
+
+
+
+</style>
+
 <% if @comments.empty? %>
+<div class='alert-danger'>
 <%= flash[:notice] %>
-<%= button_to 'Logout user', logout_path, method: :delete %>
+</div>
+
+<%= button_to 'Logout user', logout_path, method: :delete , class: "a"%><hr>
+<%= link_to 'Back', super_admin_path(current_user.id), class: "a",id: 'link' %>
+
 <% else %>
 <h1>Comments For Approval</h1>
 
@@ -19,20 +82,18 @@
   <% @comments.each do |comment| %>
       <tr>
       <% if comment.commentable_type == "Author" %>
-        <td><%= link_to comment.commentable_type, author_path(comment.commentable_id) %></td>
+        <td><%= link_to comment.commentable_type, author_path(comment.commentable_id),class: "a" %></td>
         <% else %>
-        <td><%= link_to comment.commentable_type, blog_path(comment.commentable_id) %></td>
+        <td><%= link_to comment.commentable_type, blog_path(comment.commentable_id),class: "a" %></td>
         <% end %>
         <td><%= comment.content %></td>
-        <td><%= comment.status %></td>
-        <td><%= link_to 'approved', approve_comment_by_super_admin_path(comment) %></td>
+        <td><%= link_to 'approved', approve_comment_by_super_admin_path(comment),class: "a" %></td>
       </tr>
     <% end %>
   </tbody>
-</table>
-<%= button_to 'Logout user', logout_path, method: :delete %>
-<%= link_to 'All Comments', comments_path %>
-
-<br>
+</table><hr>
+<%= link_to 'Back', super_admin_path(current_user.id), class: "a",id: 'link' %>
+<%= link_to 'All Comments', comments_path, class: "a", id: 'link'%><hr><hr>
+<%= button_to 'Logout user', logout_path, method: :delete, class:"a", id: 'button1' %>
 <% end %>
 

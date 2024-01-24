@@ -1,24 +1,17 @@
 class UsersController < ApplicationController
 include Twilio
   before_action :set_user, only: [:show, :edit, :update, :destroy]
-
   def new
     @user = User.new
   end
 
   def create
     @user = User.new(user_params)
+    @user = User.new(user_params)
+
     if @user.save
-      send_email_to_user(@user)
-      send_sms_to_user(@user)
-      session[:user_id] = @user.id
-      if @user.type == "User"
-      redirect_to user_path(@user), notice: 'Successfully signed up!'
-      elsif @user.type == "Admin"
-        redirect_to admin_path(@user), notice: 'Successfully signed up!'
-      else
-        redirect_to super_admin_path(@user), notice: 'Successfully signed up!'
-      end
+      send_notifications(@user)
+      set_session_and_redirect(@user)
     else
       render :new
     end
@@ -33,7 +26,7 @@ include Twilio
 
   def update
     if @user.update(user_params)
-      redirect_to @user, notice: 'User was successfully updated.'
+      redirect_to @user, alert: 'User was successfully updated.'
     else
       render :edit
     end
@@ -41,7 +34,7 @@ include Twilio
 
   def destroy
     @user.destroy
-    redirect_to users_path, notice: 'User was successfully destroyed.'
+    redirect_to users_path, alert: 'User and user comments was successfully destroyed.'
   end
 
   def login
@@ -52,7 +45,7 @@ include Twilio
 
     if @user
       session[:user_id] = @user.id
-      redirect_to @user, notice: 'Successfully logged in!'
+      redirect_to @user, alert: 'Successfully logged in!'
     else
       flash[:alert] = 'Wrong email or password'
       render :login
@@ -61,7 +54,7 @@ include Twilio
 
   def logout
     session[:user_id] = nil
-    redirect_to login_path, notice: 'Logged out successfully'
+    redirect_to login_path, alert: 'Logged out successfully'
   end
   
   private
@@ -74,10 +67,19 @@ include Twilio
     params.require(:user).permit(:email, :password_digest, :type, :name, :phone)
   end
 
-  def send_email_to_user(user)
+  def send_notifications(user)
     WelcomeMailer.with(user:).welcome_email.deliver_now
-  end
-  def send_sms_to_user(user)
     Twilio::SmsService.new(user.phone).call
   end
+  
+  def set_session_and_redirect(user)
+    session[:user_id] = user.id
+  
+    redirect_path = case user.type
+                    when "User" then user_path(user)
+                    when "Admin" then admin_path(user)
+                    else super_admin_path(user)
+                    end
+    redirect_to redirect_path, alert: 'Successfully signed up!'
+   end
 end

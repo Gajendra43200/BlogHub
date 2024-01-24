@@ -5,7 +5,7 @@ class AdminsController < ApplicationController
   before_action :set_comment_for_approval, only: [:approve_comment]
 
   def index
-    @admins = User.where(type: "Admin")
+    @admins = User.where(type: ["User", "Admin"])
   end
 
   def edit
@@ -13,7 +13,7 @@ class AdminsController < ApplicationController
 
   def update
     if @admin_user.update(admin_params)
-      redirect_to @admin_user, notice: 'User was successfully updated.'
+      redirect_to @admin_user, alert: 'User was successfully updated.'
     else
       render :edit
     end
@@ -25,7 +25,7 @@ class AdminsController < ApplicationController
 
   def destroy
     @admin_user.destroy
-    redirect_to users_path, notice: 'User was successfully destroyed.'
+    redirect_to users_path, alert: 'User and User Comments was successfully destroyed.'
   end
 
   def block_user
@@ -44,6 +44,8 @@ class AdminsController < ApplicationController
 
   def all_comments
     @comments = Comment.where(status: "pending")
+    flash[:notice] = "Comments do not exist for approval." if @comments.empty?
+
   end
 
   def approve_comment

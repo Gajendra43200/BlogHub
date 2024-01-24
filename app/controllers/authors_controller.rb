@@ -17,7 +17,7 @@ class AuthorsController < ApplicationController
     author_params = params.require(:author).permit(:name)
     @author = Author.new(author_params)
     if @author.save
-      redirect_to authors_path, notice: 'Author was successfully created.'
+      redirect_to authors_path, alert: 'Author was successfully created.'
     else
       render :new
     end
@@ -29,7 +29,7 @@ class AuthorsController < ApplicationController
   def update
     author_params = params.require(:author).permit(:name)
     if @author.update(author_params)
-      redirect_to authors_path, notice: 'Author was successfully updated.'
+      redirect_to authors_path, alert: 'Author was successfully updated.'
     else
       render :edit
     end
@@ -37,7 +37,7 @@ class AuthorsController < ApplicationController
 
   def destroy
     @author.destroy
-    redirect_to authors_path, notice: 'Author was successfully destroyed.'
+    redirect_to authors_path, alert: 'Author was successfully destroyed.'
   end
 
   private

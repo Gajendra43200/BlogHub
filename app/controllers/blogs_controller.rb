@@ -18,7 +18,7 @@ class BlogsController < ApplicationController
       @blog = @author.blogs.new(blog_params)
   
       if @blog.save
-        redirect_to author_blogs_path(@author), notice: 'Blog was successfully created.'
+        redirect_to author_blogs_path(@author), alert: 'Blog was successfully created.'
       else
         render :new
       end
@@ -29,7 +29,7 @@ class BlogsController < ApplicationController
   
     def update
       if @blog.update(blog_params)
-        redirect_to author_blogs_path(@author), notice: 'Blog was successfully updated.'
+        redirect_to author_blogs_path(@author), alert: 'Blog was successfully updated.'
       else
         render :edit
       end
@@ -37,7 +37,7 @@ class BlogsController < ApplicationController
   
     def destroy
       @blog.destroy
-      redirect_to author_blogs_path(@author), notice: 'Blog was successfully destroyed.'
+      redirect_to author_blogs_path(@author), alert: 'Blog was successfully destroyed.'
     end
   
     private

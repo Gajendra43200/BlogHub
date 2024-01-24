@@ -1,3 +1,39 @@
+<style>
+
+.alert-danger {
+    background-color: #f8d7da;
+    color: #721c24;
+    padding: 10px;
+    border: 1px solid #f5c6cb;
+    margin-bottom: 20px;
+}
+a{
+    display: inline-block;
+    padding: 10px 15px;
+    text-align: center;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+    border: 1px solid #007bff;
+    color: #007bff;
+    background-color: #fff;
+}
+
+button[type="submit"] {
+    margin-top: 4px;
+    padding: 10px 15px;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+    border: 1px solid #007bff;
+    color: #007bff;
+    background-color: #fff;
+
+}
+
+</style>
+
 <% if flash[:alert].present? %>
     <div class="alert alert-danger">
         <%= flash[:alert] %>
@@ -5,15 +41,14 @@
 <% end %>
 <p>Name: <%= @user.name %></p>
 <p>Email: <%= @user.email %></p>
-<p>Email: <%= @user.phone %></p>
-<p>Email: <%= @user.status %></p>
+<p>Phone No.: <%= @user.phone %></p>
+<p>Status: <%= @user.status %></p>
 <p>Type: <%= @user.type %></p>
-<p>Email: <%= @user.password_digest%></p>
-<%= link_to 'Edit', edit_user_path(@user) %> |
-<%= link_to 'Back', users_path %>
+<p>Password: <%= @user.password_digest%></p>
+<%= link_to 'Edit', edit_user_path(@user) %> 
 <%= link_to 'Create Comment For  author', user_authors_path(@user) %>
 <%= link_to 'Create Comment For  Blog', user_blogs_path(@user) %>
-<%= link_to 'All Comments', comments_path %>
-
+<%= link_to 'All Comments', comments_path %> 
+<%= button_to ' Deactivate Account', @user, method: :delete, data: { confirm: 'Are you sure?' } %>
 <%= button_to 'Logout user', logout_path, method: :delete %>
 

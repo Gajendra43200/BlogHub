@@ -1,6 +1,6 @@
 class SuperAdminsController < ApplicationController
   before_action :check_super_admin
-  before_action :set_super_admin, only: [:show, :edit, :update]
+  before_action :set_super_admin, only: [:show, :edit, :update, :destroy]
 
   def show
     @super_admin = User.find(params[:id])
@@ -11,10 +11,15 @@ class SuperAdminsController < ApplicationController
 
   def update
     if @super_admin.update(super_admin_params)
-      redirect_to @super_admin, notice: 'User was successfully updated.'
+      redirect_to @super_admin, alert: 'User was successfully updated.'
     else
       render :edit
     end
+  end
+
+  def destroy
+    @super_admin.destroy
+    redirect_to users_path, alert: 'User and user comments was successfully destroyed.'
   end
 
   def all_comments
@@ -24,7 +29,6 @@ class SuperAdminsController < ApplicationController
 
   def approve_comment_by_super_admin
     @comment = Comment.find_by(id: params[:id])
-
     if @comment.present? && @comment.status == "approved"
       @comment.update(status: "super_admin_approved")
       redirect_to approval_comments_path

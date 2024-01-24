@@ -1,3 +1,64 @@
+<style>
+/* Style for the table */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+th, td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: left;
+}
+
+th {
+    background-color: #f2f2f2;
+}
+
+/* Style for buttons */
+button, input[type="submit"], input[type="button"] {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 8px 12px;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+button:hover, input[type="submit"]:hover, input[type="button"]:hover {
+    background-color: #0056b3;
+}
+
+.a{
+    display: inline-block;
+    padding: 10px 15px;
+    text-align: center;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+    border: 1px solid #007bff;
+    color: #007bff;
+    background-color: #fff;
+}
+
+
+.a:hover {
+  background-color: #0056b3;
+  color: white;
+}
+
+/* Style for the container */
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+/* Optional: Add more styles as needed */
+
+</style>
 <h1>Users</h1>
 
 <table>
@@ -21,10 +82,10 @@
         <td><%= user.type %></td>
         <td><%= user.status %></td>
         <td><%= user.password_digest %></td>
-        <td><%= button_to 'Block', block_user_path(user), method: :post, data: { confirm: 'Are you sure?' } %></td>
-        <td><%= button_to 'Unblock', unblock_user_path(user), method: :post, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= button_to 'Block', block_user_path(user), method: :post, data: { confirm: 'Are you sure?' }, class: "a"  %></td>
+        <td><%= button_to 'Unblock', unblock_user_path(user), method: :post, data: { confirm: 'Are you sure?' }, class: "a"  %></td>
       </tr>
     <% end %>
   </tbody>
-</table>
-<%= link_to 'Back', admin_path(current_user.id) %>
+</table><hr>
+<%= link_to 'Back', admin_path(current_user.id), class: "a" %>

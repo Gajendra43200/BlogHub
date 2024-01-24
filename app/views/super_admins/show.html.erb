@@ -1,3 +1,39 @@
+<style>
+
+.alert-danger {
+    background-color: #f8d7da;
+    color: #721c24;
+    padding: 10px;
+    border: 1px solid #f5c6cb;
+    margin-bottom: 20px;
+}
+a{
+    display: inline-block;
+    padding: 10px 15px;
+    text-align: center;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+    border: 1px solid #007bff;
+    color: #007bff;
+    background-color: #fff;
+}
+
+button[type="submit"] {
+    margin-top: 4px;
+    padding: 10px 15px;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+    border: 1px solid #007bff;
+    color: #007bff;
+    background-color: #fff;
+
+}
+
+</style>
+
 <% if flash[:alert].present? %>
     <div class="alert alert-danger">
         <%= flash[:alert] %>
@@ -9,9 +45,12 @@
 <p>Status: <%= @super_admin.status %></p>
 <p>Type: <%= @super_admin.type %></p>
 <p>Password: <%= @super_admin.password_digest%></p>
-<%= link_to 'Edit', edit_super_admin_path(@super_admin) %> |
+<%= link_to 'Edit', edit_super_admin_path(@super_admin) %> 
 <%= link_to 'Pending comments for approval', approval_comments_path %>
 <%= link_to 'Create Comment For  author', user_authors_path(@super_admin) %>
 <%= link_to 'Create Comment For  Blog', user_blogs_path(@super_admin) %>
+<%= link_to 'All Comments', comments_path %> 
 <%= button_to 'Logout user', logout_path, method: :delete %>
+<%= button_to ' Deactivate Account', @super_admin, method: :delete, data: { confirm: 'Are you sure?' } %>
+
 

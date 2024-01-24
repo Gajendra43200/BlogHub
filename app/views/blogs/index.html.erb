@@ -1,3 +1,42 @@
+<style>
+.alert {
+    background-color: #f8d7da;
+    color: #721c24;
+    padding: 10px;
+    border: 1px solid #f5c6cb;
+    margin-bottom: 20px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+th, td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: left;
+}
+
+th {
+    background-color: #f2f2f2;
+}
+
+a{
+    display: inline-block;
+    padding: 10px 15px;
+    text-align: center;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+    border: 1px solid #007bff;
+    color: #007bff;
+    background-color: #fff;
+}
+
+</style>
 <% if flash[:alert].present? %>
 <div class="alert alert-danger">
   <%= flash[:alert] %>
@@ -18,7 +57,7 @@
       <tr>
         <td><%= blog.title %></td>
         <td><%= blog.content %></td>
-        <td><%= link_to 'Show', blog_path(blog)%></td>
+        <td><%= link_to 'Read', blog_path(blog)%></td>
       </tr>
     <% end %>
   </tbody>
@@ -27,7 +66,7 @@
 <br>
 
 <%if current_user.nil?%>
-<%= link_to 'Back to blog', blogs_path %>
+<%= link_to 'Back', authors_path %>
 <%else%>
 <% if current_user.type == "Admin" %>
 <%= link_to 'Back', admin_path(current_user.id) %>
